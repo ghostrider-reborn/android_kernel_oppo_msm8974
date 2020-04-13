@@ -86,6 +86,27 @@ static inline int atomic_dec_unless_positive(atomic_t *p)
 }
 #endif
 
+ /**
++ * atomic_fetch_or - perform *p |= mask and return old value of *p
++ * @p: pointer to atomic_t
++ * @mask: mask to OR on the atomic_t
++ */
+#ifndef atomic_fetch_or
+static inline int atomic_fetch_or(int mask, atomic_t *p)
+{
+	int old, val = atomic_read(p);
+
+	for (;;) {
+		old = atomic_cmpxchg(p, val, val | mask);
+		if (old == val)
+			break;
+		val = old;
+	}
+
+	return old;
+}
+#endif
+
 #ifndef CONFIG_ARCH_HAS_ATOMIC_OR
 static inline void atomic_or(int i, atomic_t *v)
 {

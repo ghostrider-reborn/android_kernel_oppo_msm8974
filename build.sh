@@ -12,4 +12,4 @@ make -j5 CC=/run/media/tfonda/HDD/android/lolz_clang/bin/clang HOSTCC=/run/media
 
 cp arch/arm/boot/zImage ../AnyKernel3/
 cd ../AnyKernel3
-zip -r ../$1 anykernel.sh dt META-INF/ tools/ zImage
+zip -r ../${1:-newclang.zip} anykernel.sh dt META-INF/ tools/ zImage
